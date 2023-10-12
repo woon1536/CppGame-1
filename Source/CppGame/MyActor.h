@@ -10,10 +10,6 @@ UCLASS()
 class CPPGAME_API AMyActor : public AActor
 {
 	GENERATED_BODY()
-	
-private:
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* Mesh;
 
 public:	
 	// Sets default values for this actor's properties

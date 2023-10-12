@@ -3,19 +3,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Pawn.h"
-#include "MyPawn.generated.h"
+#include "GameFramework/Character.h"
+#include "MyCharacter.generated.h"
 
 UCLASS()
-class CPPGAME_API AMyPawn : public APawn
+class CPPGAME_API AMyCharacter : public ACharacter
 {
 	GENERATED_BODY()
-private:
-	UPROPERTY(VisibleAnywhere)
-	UStaticMeshComponent* Mesh;
+
 public:
-	// Sets default values for this pawn's properties
-	AMyPawn();
+	// Sets default values for this character's properties
+	AMyCharacter();
 
 protected:
 	// Called when the game starts or when spawned
