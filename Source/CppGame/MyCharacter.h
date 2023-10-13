@@ -10,6 +10,11 @@ UCLASS()
 class CPPGAME_API AMyCharacter : public ACharacter
 {
 	GENERATED_BODY()
+private:
+	UPROPERTY(VisibleAnywhere)
+	class USpringArmComponent* SpringArm;
+	UPROPERTY(VisibleAnywhere)
+	class UCameraComponent* Camera;
 
 public:
 	// Sets default values for this character's properties
@@ -25,5 +30,13 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+
+public:
+	void KeyUpDown(float value);
+	void KeyLeftRight(float value);
+	void LookLeftRight(float value);
+	void LookUpDown(float value);
+
 
 };
