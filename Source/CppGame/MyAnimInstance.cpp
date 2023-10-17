@@ -3,6 +3,7 @@
 
 #include "MyAnimInstance.h"
 #include "MyCharacter.h"
+#include "GameFramework/CharacterMovementComponent.h" //Ãß°¡
 
 void UMyAnimInstance::NativeInitializeAnimation()
 {
@@ -32,6 +33,16 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 	if (IsValid(MyCharacter))
 	{
-		Speed = MyCharacter->GetVelocity().Size();
+		Velocity = CharacterMovement->Velocity;
+		FRotator Rotation = MyCharacter->GetActorRotation();
+		UE_LOG(LogTemp, Log, TEXT("Z :%f"), Rotation.Roll);
+		FVector UnrotateVector = Rotation.UnrotateVector(Velocity);
+		Vertical = UnrotateVector.X;
+		Horizontal = UnrotateVector.Y;
+		Speed = Velocity.Size2D();
+
+		auto Acceleration = CharacterMovement->GetCurrentAcceleration();
+		ShouldMove = Speed > 3.f && Acceleration != FVector::Zero();
+		IsFalling = CharacterMovement->IsFalling();
 	}
 }
