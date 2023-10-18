@@ -28,17 +28,21 @@ private:
 	bool IsFalling;
 	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	float YawOffset;
-
+	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	FRotator AimRotation;
+	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UAnimMontage* FireMontage;
 
 	UPROPERTY(VisibleAnywhere)
 	class AMyCharacter* MyCharacter;
 	UPROPERTY(VisibleAnywhere)
 	class UCharacterMovementComponent* CharacterMovement;
-
 public:
-	virtual void NativeInitializeAnimation() override;
+	UMyAnimInstance();
+public:
 	virtual void NativeBeginPlay() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
-
+public:
+	void PlayFireMontage();	  
 	
 };

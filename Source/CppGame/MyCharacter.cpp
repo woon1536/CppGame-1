@@ -5,6 +5,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Camera/CameraComponent.h"
+#include "MyAnimInstance.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -29,12 +30,20 @@ AMyCharacter::AMyCharacter()
 		GetMesh()->SetSkeletalMesh(SkeletalMesh.Object);
 		GetMesh()->SetRelativeLocationAndRotation(FVector(0.f, 0.f, -90.0f), FRotator(0.f, -90.f, 0.f));
 	}
+
+	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimInstance(TEXT("/Script/Engine.AnimBlueprint'/Game/Animations/ABP_MyCharacter.ABP_MyCharacter_C'"));
+	if (AnimInstance.Succeeded())
+	{
+		GetMesh()->SetAnimClass(AnimInstance.Class);
+	}
 }
 
 // Called when the game starts or when spawned
 void AMyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	MyAnimInstance = Cast<UMyAnimInstance>(GetMesh()->GetAnimInstance());
 	
 }
 
@@ -54,9 +63,8 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis(TEXT("LeftRight"), this, &AMyCharacter::KeyLeftRight);
 	PlayerInputComponent->BindAxis(TEXT("LookLeftRight"), this, &AMyCharacter::LookLeftRight);
 	PlayerInputComponent->BindAxis(TEXT("LookUpDown"), this, &AMyCharacter::LookUpDown);
-
-	//Jump Ãß°¡
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &AMyCharacter::Jump);
+	PlayerInputComponent->BindAction(TEXT("Fire"), EInputEvent::IE_Pressed, this, &AMyCharacter::Fire);
 
 }
 
@@ -78,5 +86,17 @@ void AMyCharacter::LookLeftRight(float value)
 void AMyCharacter::LookUpDown(float value)
 {
 	AddControllerPitchInput(value);
+}
+
+void AMyCharacter::Fire()
+{
+
+	UE_LOG(LogTemp, Log, TEXT("Fire Out"));
+	if (IsValid(MyAnimInstance))
+	{
+		MyAnimInstance->PlayFireMontage();
+
+		UE_LOG(LogTemp, Log, TEXT("Fire In"));
+	}
 }
 

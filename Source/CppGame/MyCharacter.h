@@ -15,6 +15,8 @@ private:
 	class USpringArmComponent* SpringArm;
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* Camera;
+	UPROPERTY(VisibleAnywhere)
+	class UMyAnimInstance* MyAnimInstance; 
 
 public:
 	// Sets default values for this character's properties
@@ -37,6 +39,7 @@ public:
 	void KeyLeftRight(float value);
 	void LookLeftRight(float value);
 	void LookUpDown(float value);
+	void Fire();
 
 
 };
