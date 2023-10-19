@@ -6,6 +6,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Camera/CameraComponent.h"
 #include "MyAnimInstance.h"
+#include "Arrow.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -19,8 +20,9 @@ AMyCharacter::AMyCharacter()
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	Camera->SetupAttachment(SpringArm);
 
-	SpringArm->TargetArmLength = 500.f;
+	SpringArm->TargetArmLength = 400.f;	   // 변경
 	SpringArm->SetRelativeRotation(FRotator(-35.f, 0.f, 0.f));
+	SpringArm->SocketOffset = FVector(0.f, 120.f, 75.f); //추가
 	SpringArm->bUsePawnControlRotation = true;
 
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SkeletalMesh(TEXT("/Script/Engine.SkeletalMesh'/Game/ParagonSparrow/Characters/Heroes/Sparrow/Meshes/Sparrow.Sparrow'"));
@@ -90,13 +92,17 @@ void AMyCharacter::LookUpDown(float value)
 
 void AMyCharacter::Fire()
 {
-
-	UE_LOG(LogTemp, Log, TEXT("Fire Out"));
 	if (IsValid(MyAnimInstance))
 	{
 		MyAnimInstance->PlayFireMontage();
+		FTransform SocketTransform = GetMesh()->GetSocketTransform(FName("BowEmitterSocket"));
+		FVector ActorLocation = SocketTransform.GetLocation();
+		FRotator ActorRotation = SocketTransform.GetRotation().Rotator();
+		FActorSpawnParameters params;
+		params.Owner = this;
 
-		UE_LOG(LogTemp, Log, TEXT("Fire In"));
+		auto MyArrow = GetWorld()->SpawnActor<AArrow>(ActorLocation, ActorRotation, params);
+
 	}
 }
 
