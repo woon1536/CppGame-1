@@ -56,6 +56,12 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		DeltaRotation.Normalize();
 
 		YawOffset = DeltaRotation.Yaw;
+
+		RotateYaw = FMath::FInterpTo(RotateYaw, 0.f, DeltaSeconds, 20.0f);
+		FinalRotation = MovingRotation;
+		MovingRotation = MyCharacter->GetActorRotation();
+		FRotator Delta = MovingRotation - FinalRotation;
+		UE_LOG(LogTemp, Log, TEXT("Rotation : %f"), Delta.Yaw);
 	}
 }
 

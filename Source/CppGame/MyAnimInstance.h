@@ -27,11 +27,17 @@ private:
 	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	bool IsFalling;
 	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	float RotateYaw; 
+	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	float YawOffset;
 	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	FRotator AimRotation;
 	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	UAnimMontage* FireMontage;
+	UPROPERTY(VisibleAnywhere)
+	FRotator MovingRotation;
+	UPROPERTY(VisibleAnywhere)
+	FRotator FinalRotation;
 
 	UPROPERTY(VisibleAnywhere)
 	class AMyCharacter* MyCharacter;

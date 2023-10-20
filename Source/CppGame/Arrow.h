@@ -13,9 +13,13 @@ class CPPGAME_API AArrow : public AActor
 	
 private:
    UPROPERTY(VisibleAnywhere)
+   USceneComponent* DefaultRoot;
+   UPROPERTY(VisibleAnywhere)
    UStaticMeshComponent* Mesh;
    UPROPERTY(VisibleAnywhere)
    class UBoxComponent* CollisionMesh;
+   UPROPERTY(VisibleAnywhere)
+   class UProjectileMovementComponent* ProjectileMovementComponent;
 
 public:	
 	// Sets default values for this actor's properties
