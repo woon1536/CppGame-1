@@ -3,7 +3,7 @@
 
 #include "MyAnimInstance.h"
 #include "MyCharacter.h"
-#include "GameFramework/CharacterMovementComponent.h" //Ãß°¡
+#include "GameFramework/CharacterMovementComponent.h"
 #include <Kismet/KismetMathLibrary.h>
 
 UMyAnimInstance::UMyAnimInstance()
@@ -26,8 +26,6 @@ void UMyAnimInstance::NativeBeginPlay()
 		if (IsValid(MyCharacter))
 		{
 			CharacterMovement = MyCharacter->GetCharacterMovement();
-
-			UE_LOG(LogTemp, Log, TEXT("MyCharacter IsValid"));
 		}
 	}
 }
@@ -57,11 +55,57 @@ void UMyAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 		YawOffset = DeltaRotation.Yaw;
 
-		RotateYaw = FMath::FInterpTo(RotateYaw, 0.f, DeltaSeconds, 20.0f);
-		FinalRotation = MovingRotation;
-		MovingRotation = MyCharacter->GetActorRotation();
-		FRotator Delta = MovingRotation - FinalRotation;
-		UE_LOG(LogTemp, Log, TEXT("Rotation : %f"), Delta.Yaw);
+		if (ShouldMove || IsFalling)
+		{
+			RotateYaw = FMath::FInterpTo(RotateYaw, 0.f, DeltaSeconds, 20.0f);
+			MovingRotation = MyCharacter->GetActorRotation();
+			FinalRotation = MovingRotation;
+		}
+		else
+		{
+			FinalRotation = MovingRotation;
+			MovingRotation = MyCharacter->GetActorRotation();
+			FRotator Delta = MovingRotation - FinalRotation;
+			Delta.Normalize();
+			RotateYaw -= Delta.Yaw;
+
+			float TurnValue = GetCurveValue("Turn");
+			if (TurnValue > 0.f)
+			{
+				FinalDistanceCurve = DistanceCurve;
+				DistanceCurve = GetCurveValue("DistanceCurve");
+				float DeltaDistanceCurve = DistanceCurve - FinalDistanceCurve;
+				if (RotateYaw > 0.f)
+				{
+					RotateYaw -= DeltaDistanceCurve;
+				}
+				else
+				{
+					RotateYaw += DeltaDistanceCurve;
+				}
+
+				float AbsRotateYawOffset = FMath::Abs(RotateYaw);
+			
+				if (AbsRotateYawOffset > 0.f)
+				{
+					float YawExcess = AbsRotateYawOffset - 90.f;
+					
+					if (RotateYaw > 0.f)
+					{
+						
+						RotateYaw -= YawExcess;
+					}
+					else
+					{
+						RotateYaw += YawExcess;
+					}
+
+				}
+			}
+
+		
+		}
+
 	}
 }
 

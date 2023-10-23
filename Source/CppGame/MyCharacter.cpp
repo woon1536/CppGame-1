@@ -17,10 +17,13 @@ AMyCharacter::AMyCharacter()
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 
+
+	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Character"));
+
 	SpringArm->SetupAttachment(GetCapsuleComponent());
 	Camera->SetupAttachment(SpringArm);
 
-	SpringArm->TargetArmLength = 400.f;	   // 변경
+	SpringArm->TargetArmLength = 400.f;	  
 	SpringArm->SetRelativeRotation(FRotator(-35.f, 0.f, 0.f));
 	SpringArm->SocketOffset = FVector(0.f, 120.f, 75.f); //추가
 	SpringArm->bUsePawnControlRotation = true;

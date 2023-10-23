@@ -38,6 +38,10 @@ private:
 	FRotator MovingRotation;
 	UPROPERTY(VisibleAnywhere)
 	FRotator FinalRotation;
+	UPROPERTY(VisibleAnywhere)
+	float FinalDistanceCurve;
+	UPROPERTY(VisibleAnywhere)
+	float DistanceCurve;
 
 	UPROPERTY(VisibleAnywhere)
 	class AMyCharacter* MyCharacter;
