@@ -4,6 +4,7 @@
 #include "MyEnemy.h"
 #include "Components/CapsuleComponent.h"
 #include "MyAIController.h"
+#include "MyEnemyAnimInstance.h"
 
 // Sets default values
 AMyEnemy::AMyEnemy()
@@ -19,6 +20,13 @@ AMyEnemy::AMyEnemy()
 	{
 		GetMesh()->SetSkeletalMesh(SkeletalMesh.Object);
 		GetMesh()->SetRelativeLocationAndRotation(FVector(0.f, 0.f, -88.f), FRotator(0.f, -90.f, 0.f));
+	}
+
+	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimInstance(TEXT("/Script/Engine.AnimBlueprint'/Game/Animations/ABP_MyEnemy.ABP_MyEnemy_C'"));
+	if (AnimInstance.Succeeded())
+	{
+		UE_LOG(LogTemp, Log, TEXT("AnimInstance.Succeeded"));
+		GetMesh()->SetAnimClass(AnimInstance.Class);
 	}
 
 	AIControllerClass = AMyAIController::StaticClass();
@@ -44,5 +52,20 @@ void AMyEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void AMyEnemy::Attack()
+{
+	auto EnemyAnimInstace = Cast<UMyEnemyAnimInstance>(GetMesh()->GetAnimInstance());
+	UE_LOG(LogTemp, Log, TEXT("Attack OUT"));
+	if (IsValid(EnemyAnimInstace))
+	{
+		UE_LOG(LogTemp, Log, TEXT("Attack IN"));
+		EnemyAnimInstace->PlayAttackMontage();
+	}
+	else
+	{
+
+	}
 }
 

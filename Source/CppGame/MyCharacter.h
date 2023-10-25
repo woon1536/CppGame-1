@@ -41,5 +41,4 @@ public:
 	void LookUpDown(float value);
 	void Fire();
 
-
 };

@@ -4,6 +4,7 @@
 #include "BTService_SearchTarget.h"
 #include "AIController.h"
 #include "MyCharacter.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 UBTService_SearchTarget::UBTService_SearchTarget()
 {
@@ -44,14 +45,17 @@ void UBTService_SearchTarget::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 					if (MyCharacter)
 					{
 						DrawDebugSphere(World, Center, SearchDistance, 10, FColor::Green, false, 0.5f);
+						OwnerComp.GetBlackboardComponent()->SetValueAsObject(FName("Target"), MyCharacter);
 						return;
 					}
 				}
 
+				OwnerComp.GetBlackboardComponent()->SetValueAsObject(FName("Target"), nullptr);
 				DrawDebugSphere(World, Center, SearchDistance, 10, FColor::Red, false, 0.5f);
 			}
 			else
 			{
+				OwnerComp.GetBlackboardComponent()->SetValueAsObject(FName("Target"), nullptr);
 				DrawDebugSphere(World, Center, SearchDistance, 10, FColor::Red, false, 0.5f);
 			}
 			
