@@ -16,16 +16,11 @@ AMyEnemy::AMyEnemy()
 
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Character"));
 
-	if (SkeletalMesh.Succeeded())
-	{
-		GetMesh()->SetSkeletalMesh(SkeletalMesh.Object);
-		GetMesh()->SetRelativeLocationAndRotation(FVector(0.f, 0.f, -88.f), FRotator(0.f, -90.f, 0.f));
-	}
+
 
 	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimInstance(TEXT("/Script/Engine.AnimBlueprint'/Game/Animations/ABP_MyEnemy.ABP_MyEnemy_C'"));
 	if (AnimInstance.Succeeded())
 	{
-		UE_LOG(LogTemp, Log, TEXT("AnimInstance.Succeeded"));
 		GetMesh()->SetAnimClass(AnimInstance.Class);
 	}
 
@@ -33,39 +28,11 @@ AMyEnemy::AMyEnemy()
 
 }
 
-// Called when the game starts or when spawned
-void AMyEnemy::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void AMyEnemy::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-// Called to bind functionality to input
-void AMyEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-}
-
 void AMyEnemy::Attack()
 {
-	auto EnemyAnimInstace = Cast<UMyEnemyAnimInstance>(GetMesh()->GetAnimInstance());
-	UE_LOG(LogTemp, Log, TEXT("Attack OUT"));
-	if (IsValid(EnemyAnimInstace))
+	if (IsValid(CreatureAnimInstance))
 	{
-		UE_LOG(LogTemp, Log, TEXT("Attack IN"));
-		EnemyAnimInstace->PlayAttackMontage();
-	}
-	else
-	{
-
+		CreatureAnimInstance->PlayAttackMontage();
 	}
 }
 

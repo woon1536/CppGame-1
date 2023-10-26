@@ -4,20 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "CratureAnim.h"
 #include "MyEnemyAnimInstance.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class CPPGAME_API UMyEnemyAnimInstance : public UAnimInstance
+class CPPGAME_API UMyEnemyAnimInstance : public UCratureAnim
 {
 	GENERATED_BODY()
-public:
-	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	UAnimMontage* AttackMontage;
+
 public:
 	UMyEnemyAnimInstance();
-public:
-	void PlayAttackMontage();
 };

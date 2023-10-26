@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Creature.h"
 #include "MyCharacter.generated.h"
 
 UCLASS()
-class CPPGAME_API AMyCharacter : public ACharacter
+class CPPGAME_API AMyCharacter : public ACreature
 {
 	GENERATED_BODY()
 private:
@@ -15,30 +16,19 @@ private:
 	class USpringArmComponent* SpringArm;
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* Camera;
-	UPROPERTY(VisibleAnywhere)
-	class UMyAnimInstance* MyAnimInstance; 
 
 public:
 	// Sets default values for this character's properties
 	AMyCharacter();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-
 public:
 	void KeyUpDown(float value);
 	void KeyLeftRight(float value);
 	void LookLeftRight(float value);
 	void LookUpDown(float value);
-	void Fire();
+public:
+	virtual void Attack() override;
 
 };

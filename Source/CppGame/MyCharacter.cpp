@@ -17,7 +17,6 @@ AMyCharacter::AMyCharacter()
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 
-
 	GetCapsuleComponent()->SetCollisionProfileName(TEXT("Character"));
 
 	SpringArm->SetupAttachment(GetCapsuleComponent());
@@ -43,22 +42,6 @@ AMyCharacter::AMyCharacter()
 	}
 }
 
-// Called when the game starts or when spawned
-void AMyCharacter::BeginPlay()
-{
-	Super::BeginPlay();
-
-	MyAnimInstance = Cast<UMyAnimInstance>(GetMesh()->GetAnimInstance());
-	
-}
-
-// Called every frame
-void AMyCharacter::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
 // Called to bind functionality to input
 void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -69,7 +52,7 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis(TEXT("LookLeftRight"), this, &AMyCharacter::LookLeftRight);
 	PlayerInputComponent->BindAxis(TEXT("LookUpDown"), this, &AMyCharacter::LookUpDown);
 	PlayerInputComponent->BindAction(TEXT("Jump"), EInputEvent::IE_Pressed, this, &AMyCharacter::Jump);
-	PlayerInputComponent->BindAction(TEXT("Fire"), EInputEvent::IE_Pressed, this, &AMyCharacter::Fire);
+	PlayerInputComponent->BindAction(TEXT("Fire"), EInputEvent::IE_Pressed, this, &AMyCharacter::Attack);
 
 }
 
@@ -93,11 +76,11 @@ void AMyCharacter::LookUpDown(float value)
 	AddControllerPitchInput(value);
 }
 
-void AMyCharacter::Fire()
+void AMyCharacter::Attack()
 {
-	if (IsValid(MyAnimInstance))
+	if (IsValid(CreatureAnimInstance))
 	{
-		MyAnimInstance->PlayFireMontage();
+		CreatureAnimInstance->PlayAttackMontage();
 		FTransform SocketTransform = GetMesh()->GetSocketTransform(FName("BowEmitterSocket"));
 		FVector ActorLocation = SocketTransform.GetLocation();
 		FRotator ActorRotation = SocketTransform.GetRotation().Rotator();

@@ -4,27 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Creature.h"
 #include "MyEnemy.generated.h"
 
 UCLASS()
-class CPPGAME_API AMyEnemy : public ACharacter
+class CPPGAME_API AMyEnemy : public ACreature
 {
 	GENERATED_BODY()
-
 public:
 	// Sets default values for this character's properties
 	AMyEnemy();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 public:
-	void Attack();
+	virtual void Attack() override;
 };

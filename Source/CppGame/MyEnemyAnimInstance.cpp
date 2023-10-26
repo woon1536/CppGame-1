@@ -12,13 +12,4 @@ UMyEnemyAnimInstance::UMyEnemyAnimInstance()
 	}
 }
 
-void UMyEnemyAnimInstance::PlayAttackMontage()
-{
-	if (IsValid(AttackMontage))
-	{
-		if (!Montage_IsPlaying(AttackMontage))
-		{
-			Montage_Play(AttackMontage);
-		}
-	}
-}
+
