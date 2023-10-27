@@ -58,6 +58,8 @@ void AMyCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AMyCharacter::KeyUpDown(float value)
 {
+
+
 	AddMovementInput(GetActorForwardVector(), value);
 }
 

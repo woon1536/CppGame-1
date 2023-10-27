@@ -33,8 +33,9 @@ void UCratureAnim::NativeUpdateAnimation(float DeltaSeconds)
 		Horizontal = UnrotateVector.Y;
 		Speed = Velocity.Size2D();
 
-		auto Acceleration = CharacterMovement->GetCurrentAcceleration();
-		ShouldMove = Speed > 3.f && Acceleration != FVector::Zero();
+		//auto Acceleration = CharacterMovement->GetCurrentAcceleration();
+		//ShouldMove = Speed > 3.f && Acceleration != FVector::Zero();
+		ShouldMove = Speed > 3.f;
 		IsFalling = CharacterMovement->IsFalling();
 	}
 

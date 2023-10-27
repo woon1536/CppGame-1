@@ -7,5 +7,6 @@
 
 void ACreature::BeginPlay()
 {
+	Super::BeginPlay();
 	CreatureAnimInstance = Cast<UCratureAnim>(GetMesh()->GetAnimInstance());
 }

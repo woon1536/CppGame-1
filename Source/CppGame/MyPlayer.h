@@ -18,16 +18,16 @@ private:
 	class USpringArmComponent* SpringArm;
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* Camera;
-//public:
-//	AMyPlayer();
-//public:
-//	// Called to bind functionality to input
-//	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-//public:
-//	void KeyUpDown(float value);
-//	void KeyLeftRight(float value);
-//	void LookLeftRight(float value);
-//	void LookUpDown(float value);
-//public:
-//	virtual void Attack() override;
+public:
+	AMyPlayer();
+public:
+	// Called to bind functionality to input
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+public:
+	void KeyUpDown(float value);
+	void KeyLeftRight(float value);
+	void LookLeftRight(float value);
+	void LookUpDown(float value);
+public:
+	virtual void Attack() override;
 };
